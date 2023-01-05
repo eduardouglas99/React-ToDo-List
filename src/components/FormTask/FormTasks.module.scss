@@ -1,0 +1,32 @@
+.formTask {
+    max-width: 100%;
+    width: 100%;
+    gap: 5px;
+    &__input {
+        height: 30px;
+        border-radius: 3px;
+        color: #fff;
+        font-size: 16px;
+        padding: 10px;
+        max-width: 100%;
+        width: 100%;
+        outline: none;
+        color: #000;
+        border: 1px solid #b9b9b9;
+    }
+    &__button {
+        background-color: #8b2cc7;
+        height: 30px;
+        border-radius: 3px;
+        justify-content: center;
+        color: #fff;
+        font-size: 30px;
+        max-width: 30px;
+        width: 100%;
+        text-align: center;
+        cursor: pointer;
+        &:hover {
+            background-color: #8b2aa8;
+        }
+    }
+}
