@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import styles from "./FormTasks.module.scss";
+import { IoMdAddCircleOutline } from 'react-icons/io';
 
 type FormTaskProps = {
     handleSubmit: (valor: string) => void;
@@ -18,8 +19,15 @@ export default function FormTask({handleSubmit} : FormTaskProps) {
             />
             <button 
                 type="button" 
-                onClick={() => handleSubmit(inputRef.current?.value || "")}
-                className={`${styles.formTask__button} flex`}>+</button>
+                onClick={() => {
+                    handleSubmit(inputRef.current?.value || "");
+                    if(inputRef.current) {
+                        inputRef.current.value = "";
+                    }
+                }}
+                className={`${styles.formTask__button} flex`}>
+                    <IoMdAddCircleOutline />
+            </button>     
         </div>
     )
 }

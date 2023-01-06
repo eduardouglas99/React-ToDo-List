@@ -19,6 +19,27 @@
             font-size: 16px;
             border-radius: 3px;
             cursor: pointer;
+            display: none;
+            justify-content: center;
+        }
+        &:hover {
+            & > button {
+                display: flex;
+            }
+        }
+    }
+}
+
+.buttonLimpar {
+    justify-content: space-between;
+    max-width: 100%;
+    width: 100%;
+    button {
+        border: 1px solid #515151;
+        padding: 4px;
+        cursor: pointer;
+        &:hover {
+            border: 1px solid #262626;
         }
     }
 }
