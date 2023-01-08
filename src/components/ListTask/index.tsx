@@ -1,48 +1,59 @@
 import styles from './ListTask.module.scss';
 import { FaTrash } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type ListTaskProps = {
     ListTask: string[];
     clearTask: (index: number) => void;
     clearAllTasks: () => void;
+    // taskCheckedRearrange: (item: string, index: number) => void;
 }
 
 export default function ListTask({ListTask, clearTask, clearAllTasks} :ListTaskProps) {
     const [itemParaExcluir, setItemParaExcluir] = useState<number>();
     const [openModalLimpar, setOpenModalLimpar] = useState<boolean>(false);
 
+    function taskChecked(index: number) {
+        const item = document.querySelectorAll("li.item-list");
+        item[index].classList.toggle(`${styles.itemCheck}`)
+    }
+
     return (
         <>
             {(typeof itemParaExcluir == "number" || (openModalLimpar && ListTask)) && (
-                <div className={`modalConfirmClearTask`}>
+                <div className={`${styles.modalConfirmClearTask}`}>
                     <h2>Aviso</h2>
                     <p>
                         {!openModalLimpar ? `Realmente deseja excluir essa tarefa?` : `Realmente deseja excluir todos as tarefas?`}
                     </p>
-                    
-                    <button type='button' onClick={() => {
-                        if(!openModalLimpar && typeof itemParaExcluir == "number") {
-                            clearTask(itemParaExcluir);
+                    <div className={`${styles.modalConfirmClearTask__buttons} flex`}>
+                        <button type='button' onClick={() => {
+                            if(!openModalLimpar && typeof itemParaExcluir == "number") {
+                                clearTask(itemParaExcluir);
+                                setItemParaExcluir(undefined);
+                                return;
+                            }
+                            clearAllTasks();
+                            setOpenModalLimpar(false)
+                        }}>
+                            Sim
+                        </button>
+                        <button type='button' onClick={() => {
                             setItemParaExcluir(undefined);
-                            return;
-                        }
-                        clearAllTasks();
-                        setOpenModalLimpar(false)
-                    }}>
-                        Sim
-                    </button>
-                    <button type='button' onClick={() => {
-                        setItemParaExcluir(undefined);
-                        setOpenModalLimpar(false)
-                    }}>
-                        Não
-                    </button>
+                            setOpenModalLimpar(false)
+                        }}>
+                            Não
+                        </button>
+                    </div>
                 </div>
             )}
             <ul className={`${styles.listaItem} flex`}>
                 {ListTask.map((item, index) => (
-                    <li key={index} className={`flex`}>
+                    <li key={index} className={`flex item-list`}>
+                        <input type="checkbox" name="checkTask" id="checkTask" onClick={() => {
+                            taskChecked(index);
+                            // taskCheckedRearrange(item, index);
+                        }}/>
                         {item}
                         <button type='button' className={`flex`} onClick={() => {
                             setItemParaExcluir(index);
@@ -59,7 +70,7 @@ export default function ListTask({ListTask, clearTask, clearAllTasks} :ListTaskP
                         setOpenModalLimpar(true);
                         return;
                     }
-                    alert("Você não possui tarefas para excluir :/")
+                    alert("Você não possui tarefas para excluir :/");
                 }}>Limpar</button>
             </div>
         </>
