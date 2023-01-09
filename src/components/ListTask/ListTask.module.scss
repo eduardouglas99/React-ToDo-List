@@ -10,7 +10,7 @@
         border-radius: 3px;
         gap: 8px;
         position: relative;
-        padding: 6px 10px 6px 44px;
+        padding: 6px 10px 6px 30px;
         
         input[type="checkbox"] {
             /* Add if not using autoprefixer */
@@ -24,18 +24,19 @@
           
             font: inherit;
             color: currentColor;
-            width: 34px;
+            width: 31px;
             height: 31px;
             border: 0.15em solid #2cd12c;
-            background-color: #3abd3a;
-            border-radius: 3px;
+            background-color: #5ee15e;
+            border-radius: 50%;
             position: absolute;
-            left: 0;
+            left: -11px;
             outline: none!important;
             // transform: translateY(-0.075em);
           
             display: grid;
             place-content: center;
+            cursor: pointer;
         }
         
         input[type="checkbox"]::before {

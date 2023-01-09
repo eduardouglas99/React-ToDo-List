@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import styles from "./FormTasks.module.scss";
 import { IoMdAddCircleOutline } from 'react-icons/io';
+import { Tarefa } from "../../models/Tarefa";
 
 type FormTaskProps = {
     handleSubmit: (valor: string) => void;

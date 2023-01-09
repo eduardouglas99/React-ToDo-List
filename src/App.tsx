@@ -1,39 +1,52 @@
 import { useState } from "react";
 import FormTask from "./components/FormTask";
 import ListTask from "./components/ListTask";
+import { Tarefa } from "./models/Tarefa";
 
 function App() {
 
-  const [listaTarefas, setListaTarefas] = useState<string[]>([]);
+  const [listaTarefas, setListaTarefas] = useState<Tarefa[]>([]);
   const [feedback, setFeedback] = useState<boolean>(false);
-  const [value, setValue] = useState<string>("")
 
   function handleSubmit(valor: string) {
     const temItemNoArray = listaTarefas.length;
-    const temItemIgualNoArray = listaTarefas.filter((item) => item === valor).length;
+    const temItemIgualNoArray = listaTarefas.filter((item) => item.titulo === valor).length;
     const valorLimpo = valor.trim();
 
+    const tarefa: Tarefa = {
+      id: listaTarefas.length ++,
+      titulo: valorLimpo,
+      concluido: false
+    }
+    
     if(valorLimpo !== "") {
       if(temItemNoArray && temItemIgualNoArray) {
         setFeedback(true);
         return;
       }
-      setListaTarefas([...listaTarefas, valor]);
+      setListaTarefas([...listaTarefas, tarefa]);
       setFeedback(false);
       return;
     } 
     setFeedback(true);
   }
 
-  // function taskCheckedRearrange(item: string, index: number) {
-  //   listaTarefas.splice(index, 1);
-  //   setListaTarefas([...listaTarefas, item]);
-  //   console.log(listaTarefas)
-  // }
+  function handleTarefaConcluida(id: number, titulo: string, concluido: boolean) {
+    const novoArray = listaTarefas.filter(item => item.id !== id);
+    const novaTarefa: Tarefa = {
+      id: id,
+      titulo: titulo,
+      concluido: !concluido
+    }
+    novoArray.splice(id, 0, novaTarefa);
+    setListaTarefas([...novoArray]);
+  }
 
-  function clearTask(index: number) {
-    listaTarefas.splice(index, 1);
-    setListaTarefas([...listaTarefas]);
+  function clearTask(id: number) {
+      const novoArray = listaTarefas.filter(item => item.id !== id);
+      // listaTarefas.splice(id, 1);
+      setListaTarefas([...novoArray]);
+    
   }
 
   function clearAllTasks() {
@@ -53,7 +66,7 @@ function App() {
           ListTask={listaTarefas} 
           clearTask={clearTask}
           clearAllTasks={clearAllTasks}
-          // taskCheckedRearrange={taskCheckedRearrange}
+          handleTarefaConcluida={handleTarefaConcluida}
           />
       </div>
     </div>

@@ -1,21 +1,21 @@
 import styles from './ListTask.module.scss';
-import { FaTrash } from 'react-icons/fa';
 import { useState } from 'react';
+import ListItem from '../ListItem';
+import { Tarefa } from '../../models/Tarefa';
 
 type ListTaskProps = {
-    ListTask: string[];
+    ListTask: Tarefa[];
     clearTask: (index: number) => void;
     clearAllTasks: () => void;
-    // taskCheckedRearrange: (item: string, index: number) => void;
+    handleTarefaConcluida: (id: number, titulo: string, concluido: boolean) => void;
 }
 
-export default function ListTask({ListTask, clearTask, clearAllTasks} :ListTaskProps) {
+export default function ListTask({ListTask, clearTask, clearAllTasks, handleTarefaConcluida} :ListTaskProps) {
     const [itemParaExcluir, setItemParaExcluir] = useState<number>();
     const [openModalLimpar, setOpenModalLimpar] = useState<boolean>(false);
 
-    function taskChecked(index: number) {
-        const item = document.querySelectorAll("li.item-list");
-        item[index].classList.toggle(`${styles.itemCheck}`)
+    function handleItemParaExcluir(id: number) {
+        setItemParaExcluir(id)
     }
 
     return (
@@ -49,18 +49,12 @@ export default function ListTask({ListTask, clearTask, clearAllTasks} :ListTaskP
             )}
             <ul className={`${styles.listaItem} flex`}>
                 {ListTask.map((item, index) => (
-                    <li key={index} className={`flex item-list`}>
-                        <input type="checkbox" name="checkTask" id="checkTask" onClick={() => {
-                            taskChecked(index);
-                            // taskCheckedRearrange(item, index);
-                        }}/>
-                        {item}
-                        <button type='button' className={`flex`} onClick={() => {
-                            setItemParaExcluir(index);
-                        }}>
-                            <FaTrash />
-                        </button>
-                    </li>
+                    <ListItem
+                        key={index}
+                        item={item}
+                        setItemParaExcluir={handleItemParaExcluir}
+                        handleTarefaConcluida={handleTarefaConcluida}
+                    />
                 ))}
             </ul>
             <div className={`${styles.buttonLimpar} flex`}>
