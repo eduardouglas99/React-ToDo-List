@@ -1,3 +1,26 @@
 .itemActive {
-    background-color: #2cd12c!important;
+    background-color: #86df86 !important;
+    text-decoration: line-through;
+}
+
+.iconCheckTask, 
+.iconUncheckTask {
+    position: absolute;
+    left: 0;
+    font-size: 29px;
+    cursor: pointer;
+    outline: none;
+    border-radius: 50%;
+}
+.iconCheckTask {
+    background-color: #005600;
+    color: #ffffff;
+    left: -8px;
+}
+
+.iconUncheckTask {
+    background-color: #fff;
+    color: transparent;
+    border: 1px solid #ccc;
+    left: -8px;
 }

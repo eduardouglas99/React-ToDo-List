@@ -7,7 +7,7 @@ body, * {
 }
 
 body {
-  background: #d3d0d0;
+  background: #0f7c8b;
 }
 
 .flex {
@@ -21,11 +21,11 @@ body {
 }
 
 h1 {
-  color: #515151;
+  color: #0f7c8b;
 }
 
 .modal-center {
-  background-color: #efefef;
+  background-color: #fff;
   transform: translate(50%, -50%);
   top: 50%; 
   right: 50%;
@@ -36,7 +36,6 @@ h1 {
   max-width: 480px;
   width: 100%;
   border-radius: 3px;
-  border: 1px solid #484747;
 }
 
 .modal-center .feedback-error {

@@ -1,8 +1,6 @@
 import { useRef } from "react";
 import styles from "./FormTasks.module.scss";
-import { IoMdAddCircleOutline } from 'react-icons/io';
-import { Tarefa } from "../../models/Tarefa";
-
+import { AiOutlinePlus } from 'react-icons/ai';
 type FormTaskProps = {
     handleSubmit: (valor: string) => void;
 }
@@ -27,7 +25,7 @@ export default function FormTask({handleSubmit} : FormTaskProps) {
                     }
                 }}
                 className={`${styles.formTask__button} flex`}>
-                    <IoMdAddCircleOutline />
+                    <AiOutlinePlus />
             </button>     
         </div>
     )

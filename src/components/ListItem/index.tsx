@@ -1,6 +1,8 @@
 import {FaTrash} from 'react-icons/fa';
 import { Tarefa } from '../../models/Tarefa';
 import styles from "./ListItem.module.scss";
+import { TbCheck } from 'react-icons/tb';
+import { ImCheckboxUnchecked } from 'react-icons/im';
 
 type ListProps = {
     item: Tarefa;
@@ -9,11 +11,18 @@ type ListProps = {
 }
 
 export default function ListItem({item, setItemParaExcluir, handleTarefaConcluida} : ListProps) {
+
     return (
         <li className={`flex item-list ${item.concluido ? `${styles.itemActive}` : ``}`}>
-            <input type="checkbox" name="checkTask" id="checkTask" onClick={() => {
-                handleTarefaConcluida(item.id, item.titulo, item.concluido);
-            }}/>
+            {item.concluido ? (
+                <TbCheck className={`${styles.iconCheckTask}`} onClick={() => {
+                    handleTarefaConcluida(item.id, item.titulo, item.concluido);
+                }}/>
+            ) : (
+                <ImCheckboxUnchecked className={`${styles.iconUncheckTask}`} onClick={() => {
+                    handleTarefaConcluida(item.id, item.titulo, item.concluido);
+                }}/>
+            )}
             {item.titulo}
             <button type='button' className={`flex`} onClick={() => { setItemParaExcluir(item.id) }}>
                 <FaTrash />

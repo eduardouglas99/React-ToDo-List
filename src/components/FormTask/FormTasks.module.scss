@@ -19,18 +19,20 @@
         }
     }
     &__button {
-        background-color: #515151;
-        height: 30px;
-        border-radius: 50%;
+        background-color: #0f7c8b;
+        height: 28px;
         justify-content: center;
         color: #fff;
-        font-size: 30px;
-        max-width: 30px;
+        max-width: 28px;
         width: 100%;
         text-align: center;
         cursor: pointer;
+        border-radius: 3px;
+        svg {
+            font-size: 18px;
+        }
         &:hover {
-            background-color: #262626;
+            transform: scale(1.1);
         }
     }
 }
