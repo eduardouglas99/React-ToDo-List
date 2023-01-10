@@ -47,7 +47,7 @@ export default function ListTask({ListTask, clearTask, clearAllTasks, handleTare
                     </div>
                 </div>
             )}
-            <ul className={`${styles.listaItem} flex`}>
+            <ul className={`${styles.listTask} flex`}>
                 {ListTask.map((item, index) => (
                     <ListItem
                         key={index}

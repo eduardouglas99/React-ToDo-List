@@ -13,7 +13,7 @@ type ListProps = {
 export default function ListItem({item, setItemParaExcluir, handleTarefaConcluida} : ListProps) {
 
     return (
-        <li className={`flex item-list ${item.concluido ? `${styles.itemActive}` : ``}`}>
+        <li className={`flex ${styles.listTaskItem} ${item.concluido ? `${styles.itemActive}` : ``}`}>
             {item.concluido ? (
                 <TbCheck className={`${styles.iconCheckTask}`} onClick={() => {
                     handleTarefaConcluida(item.id, item.titulo, item.concluido);

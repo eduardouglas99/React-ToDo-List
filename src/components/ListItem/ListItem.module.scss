@@ -1,26 +1,51 @@
-.itemActive {
-    background-color: #86df86 !important;
-    text-decoration: line-through;
-}
+.listTaskItem {
+    width: 100%;
+    background-color: #0f7c8b1f;
+    border-radius: 3px;
+    gap: 8px;
+    position: relative;
+    padding: 6px 10px 6px 30px;
+    .iconCheckTask, 
+    .iconUncheckTask {
+        position: absolute;
+        left: 0;
+        font-size: 29px;
+        cursor: pointer;
+        outline: none;
+        border-radius: 50%;
+    }
+    .iconCheckTask {
+        background-color: #005600;
+        color: #ffffff;
+        left: -8px;
+    }
 
-.iconCheckTask, 
-.iconUncheckTask {
-    position: absolute;
-    left: 0;
-    font-size: 29px;
-    cursor: pointer;
-    outline: none;
-    border-radius: 50%;
-}
-.iconCheckTask {
-    background-color: #005600;
-    color: #ffffff;
-    left: -8px;
-}
-
-.iconUncheckTask {
-    background-color: #fff;
-    color: transparent;
-    border: 1px solid #ccc;
-    left: -8px;
+    .iconUncheckTask {
+        background-color: #fff;
+        color: transparent;
+        border: 1px solid #ccc;
+        left: -8px;
+    }
+    button {
+        position: absolute;
+        right: 0;
+        background: transparent;
+        width: 30px;
+        height: 30px;
+        color: #eb1313;
+        font-size: 16px;
+        border-radius: 3px;
+        cursor: pointer;
+        display: none;
+        justify-content: center;
+    }
+    &:hover {
+        & > button {
+            display: flex;
+        }
+    }
+    &.itemActive {
+        background-color: #86df86;
+        text-decoration: line-through;
+    }
 }
