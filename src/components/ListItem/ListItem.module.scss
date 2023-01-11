@@ -38,6 +38,15 @@
         cursor: pointer;
         display: none;
         justify-content: center;
+        @media only screen and (max-width: 1024px) {
+            background-color: #eb1313;
+            display: flex;
+        }
+        svg {
+            @media only screen and (max-width: 1024px) {
+                color: #fff;
+            }
+        }
     }
     &:hover {
         & > button {

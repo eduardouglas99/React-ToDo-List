@@ -21,29 +21,31 @@ export default function ListTask({ListTask, clearTask, clearAllTasks, handleTare
     return (
         <>
             {(typeof itemParaExcluir == "number" || (openModalLimpar && ListTask)) && (
-                <div className={`${styles.modalConfirmClearTask}`}>
-                    <h2>Aviso</h2>
-                    <p>
-                        {!openModalLimpar ? `Realmente deseja excluir essa tarefa?` : `Realmente deseja excluir todos as tarefas?`}
-                    </p>
-                    <div className={`${styles.modalConfirmClearTask__buttons} flex`}>
-                        <button type='button' onClick={() => {
-                            if(!openModalLimpar && typeof itemParaExcluir == "number") {
-                                clearTask(itemParaExcluir);
+                <div className={`${styles.containerModal} flex container`}>
+                    <div className={`${styles.containerModal__modalConfirmClearTask} flex`}>
+                        <h2>Aviso</h2>
+                        <p>
+                            {!openModalLimpar ? `Realmente deseja excluir essa tarefa?` : `Realmente deseja excluir todos as tarefas?`}
+                        </p>
+                        <div className={`${styles.containerModal__modalConfirmClearTask__buttons} flex`}>
+                            <button type='button' onClick={() => {
+                                if(!openModalLimpar && typeof itemParaExcluir == "number") {
+                                    clearTask(itemParaExcluir);
+                                    setItemParaExcluir(undefined);
+                                    return;
+                                }
+                                clearAllTasks();
+                                setOpenModalLimpar(false)
+                            }}>
+                                Sim
+                            </button>
+                            <button type='button' onClick={() => {
                                 setItemParaExcluir(undefined);
-                                return;
-                            }
-                            clearAllTasks();
-                            setOpenModalLimpar(false)
-                        }}>
-                            Sim
-                        </button>
-                        <button type='button' onClick={() => {
-                            setItemParaExcluir(undefined);
-                            setOpenModalLimpar(false)
-                        }}>
-                            Não
-                        </button>
+                                setOpenModalLimpar(false)
+                            }}>
+                                Não
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

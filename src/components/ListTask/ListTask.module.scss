@@ -1,42 +1,49 @@
-.modalConfirmClearTask {
-    transform: translate(50%, -50%);
-    top: 50%;
-    right: 50%;
+.containerModal {
+    top: 0;
+    right: 0;
     position: fixed;
     width: 100%;
     height: 100%;
     max-width: 100%;
     z-index: 99999999999;
-    background-color: #efefef;
-    display: flex;
-    flex-direction: column;
+    background: #0f7c8b;
     justify-content: center;
-    gap: 40px;
-    padding: 30px;
-    text-align: center;
-    h2 {
-        color: #515151;
-        font-size: 40px;
-    }
-    &__buttons {
+    &__modalConfirmClearTask {
+        background-color: #fff;
+        max-width: 480px;
+        width: 100%;
         flex-direction: column;
-        gap: 16px;
-        button {
-            background-color: #dfdfdf;
-            padding: 6px 10px;
-            border-radius: 3px;
-            max-width: 180px;
+        gap: 40px;
+        padding: 30px;
+        text-align: center;
+        margin: 0 20px;
+        border-radius: 3px;
+        h2 {
+            color: #0f7c8b;
+            font-size: 40px;
+        }
+        &__buttons {
+            flex-direction: column;
+            gap: 16px;
+            max-width: 100%;
             width: 100%;
-            margin: 0 auto;
-            cursor: pointer;
-            font-size: 16px;
-            &:first-child {
-                background-color: red;
-                color: #fff;
-            }
-            &:hover {
-                background-color: #ccc;
-                color: #000;
+            button {
+                background-color: #dfdfdf;
+                padding: 6px 10px;
+                border-radius: 3px;
+                max-width: 180px;
+                width: 100%;
+                margin: 0 auto;
+                cursor: pointer;
+                font-size: 16px;
+                &:first-child {
+                    background-color: red;
+                    color: #fff;
+                }
+                &:hover {
+                    background-color: #ccc;
+                    color: #000;
+                }
             }
         }
     }

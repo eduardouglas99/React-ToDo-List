@@ -60,18 +60,20 @@ const Home = () => {
   
     return (
       <div className="App">
-        <div className={`${styles.modalCenter} container flex`} >
-          <img src={logoHome} alt="Todo list" title="Todo list" width={180} height={140} />
-          <FormTask handleSubmit={handleSubmit} />
-          {feedback && (
-            <p className={`${styles.modalCenter__feedbackError}`}>Por favor, digite uma {listaTarefas.length > 0 ? `nova tarefa.` : `tarefa.`}</p>
-          )}
-          <ListTask 
-            ListTask={listaTarefas} 
-            clearTask={clearTask}
-            clearAllTasks={clearAllTasks}
-            handleTarefaConcluida={handleTarefaConcluida}
-            />
+        <div className={`${styles.container} container flex`}>
+          <div className={`${styles.container__modalCenter} flex`} >
+            <img src={logoHome} alt="Todo list" title="Todo list" width={180} height={140} />
+            <FormTask handleSubmit={handleSubmit} />
+            {feedback && (
+              <p className={`${styles.modalCenter__feedbackError}`}>Por favor, digite uma {listaTarefas.length > 0 ? `nova tarefa.` : `tarefa.`}</p>
+            )}
+            <ListTask 
+              ListTask={listaTarefas} 
+              clearTask={clearTask}
+              clearAllTasks={clearAllTasks}
+              handleTarefaConcluida={handleTarefaConcluida}
+              />
+          </div>
         </div>
       </div>
     )
