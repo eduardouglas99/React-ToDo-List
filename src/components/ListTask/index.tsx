@@ -49,26 +49,30 @@ export default function ListTask({ListTask, clearTask, clearAllTasks, handleTare
                     </div>
                 </div>
             )}
-            <ul className={`${styles.listTask} flex`}>
-                {ListTask.map((item, index) => (
-                    <ListItem
-                        key={index}
-                        item={item}
-                        setItemParaExcluir={handleItemParaExcluir}
-                        handleTarefaConcluida={handleTarefaConcluida}
-                    />
-                ))}
-            </ul>
-            <div className={`${styles.buttonLimpar} flex`}>
-                <p>Você possui {ListTask.length === 1 ? `${ListTask.length} tarefa` : `${ListTask.length} tarefas`}</p>
-                <button type='button' onClick={() => {
-                    if(ListTask.length > 0) {
-                        setOpenModalLimpar(true);
-                        return;
-                    }
-                    alert("Você não possui tarefas para excluir :/");
-                }}>Limpar</button>
-            </div>
+            {ListTask.length > 0 && (
+                <ul className={`${styles.listTask} flex`}>
+                    {ListTask.map((item, index) => (
+                        <ListItem
+                            key={index}
+                            item={item}
+                            setItemParaExcluir={handleItemParaExcluir}
+                            handleTarefaConcluida={handleTarefaConcluida}
+                        />
+                    ))}
+                </ul>
+            )}
+            {ListTask.length >= 1 && (
+                <div className={`${styles.buttonLimpar} flex`}>
+                    <p>Você possui {ListTask.length === 1 ? `${ListTask.length} tarefa` : `${ListTask.length} tarefas`}</p>
+                    <button type='button' onClick={() => {
+                        if(ListTask.length > 0) {
+                            setOpenModalLimpar(true);
+                            return;
+                        }   
+                    }}>Limpar</button>
+                    
+                </div>
+            )}
         </>
     )
 }

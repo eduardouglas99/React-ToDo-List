@@ -1,6 +1,6 @@
 .listTaskItem {
     width: 100%;
-    background-color: #0f7c8b1f;
+    // background-color: #0f7c8b1f;
     border-radius: 3px;
     gap: 8px;
     position: relative;
@@ -56,5 +56,14 @@
     &.itemActive {
         background-color: #86df86;
         text-decoration: line-through;
+    }
+    &::after {
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        content: "";
+        width: 100%;
+        height: 1px;
+        background: #cccccc6b;
     }
 }

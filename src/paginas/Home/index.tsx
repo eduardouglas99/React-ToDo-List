@@ -34,22 +34,26 @@ const Home = () => {
       } 
       setFeedback(true);
     }
-  
+
     function handleTarefaConcluida(id: number, titulo: string, concluido: boolean) {
       const novoArray = listaTarefas.filter(item => item.id !== id);
       const novaTarefa: Tarefa = {
-        id: id,
         titulo: titulo,
+        id: id,
         concluido: !concluido
       }
-      novoArray.splice(id, 0, novaTarefa);
-      novoArray.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
+      if(!concluido) {
+        novoArray.push(novaTarefa);
+      } else {
+        novoArray.splice(id, 0, novaTarefa);
+        novoArray.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
+      }
       setListaTarefas([...novoArray]);
     }
-  
+
     function clearTask(id: number) {
       const novoArray = listaTarefas.filter(item => item.id !== id);
-      novoArray.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
+      // novoArray.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
       setListaTarefas([...novoArray]);
     }
   
@@ -65,7 +69,7 @@ const Home = () => {
             <img src={logoHome} alt="Todo list" title="Todo list" width={180} height={140} />
             <FormTask handleSubmit={handleSubmit} />
             {feedback && (
-              <p className={`${styles.modalCenter__feedbackError}`}>Por favor, digite uma {listaTarefas.length > 0 ? `nova tarefa.` : `tarefa.`}</p>
+              <p className={`${styles.container__modalCenter__feedbackError}`}>Por favor, digite uma {listaTarefas.length > 0 ? `nova tarefa.` : `tarefa.`}</p>
             )}
             <ListTask 
               ListTask={listaTarefas} 
