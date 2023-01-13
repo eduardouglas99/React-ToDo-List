@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormTask from "../../components/FormTask";
 import ListTask from "../../components/ListTask";
 import { Tarefa } from "../../models/Tarefa";
@@ -42,21 +42,28 @@ const Home = () => {
         id: id,
         concluido: !concluido
       }
-      if(!concluido) {
-        novoArray.push(novaTarefa);
-      } else {
-        novoArray.splice(id, 0, novaTarefa);
-        novoArray.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
-      }
+      novoArray.splice(id, 0, novaTarefa);
+      novoArray.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
       setListaTarefas([...novoArray]);
     }
 
-    function clearTask(id: number) {
-      const novoArray = listaTarefas.filter(item => item.id !== id);
-      // novoArray.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
+    function clearTask(item: Tarefa) {
+      const itemUndoAction: Tarefa = {
+        id: item.id,
+        titulo: item.titulo,
+        concluido: item.concluido   
+      }
+      const novoArray = listaTarefas.filter(item => item.id !== itemUndoAction.id);
       setListaTarefas([...novoArray]);
     }
-  
+
+    function undoAction(itemSalvo: Tarefa) {
+      if(itemSalvo) {
+        listaTarefas.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
+        setListaTarefas([...listaTarefas, itemSalvo]);
+      }
+    }
+
     function clearAllTasks() {
       setListaTarefas([]);
       setFeedback(false)
@@ -76,6 +83,7 @@ const Home = () => {
               clearTask={clearTask}
               clearAllTasks={clearAllTasks}
               handleTarefaConcluida={handleTarefaConcluida}
+              undoAction={undoAction}
               />
           </div>
         </div>

@@ -6,7 +6,7 @@ import { ImCheckboxUnchecked } from 'react-icons/im';
 
 type ListProps = {
     item: Tarefa;
-    setItemParaExcluir: (id: number) => void;
+    setItemParaExcluir: (item: Tarefa) => void;
     handleTarefaConcluida: (id: number, titulo: string, concluido: boolean) => void;
 }
 
@@ -24,7 +24,7 @@ export default function ListItem({item, setItemParaExcluir, handleTarefaConcluid
                 }}/>
             )}
             {item.titulo}
-            <button type='button' className={`flex`} onClick={() => { setItemParaExcluir(item.id) }}>
+            <button type='button' className={`flex`} onClick={() => setItemParaExcluir(item)}>
                 <FaTrash />
             </button>
         </li>

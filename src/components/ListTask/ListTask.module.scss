@@ -49,6 +49,33 @@
     }
 }
 
+.containerUndoAction {
+    position: absolute;
+    bottom: 0;
+    right: 0px;
+    padding: 12px;
+    background: #26232352;
+    border-radius: 3px;
+    max-width: 100%;
+    width: 100%;
+    justify-content: center;
+    z-index: 999999999999999999999;
+    display: none;
+    button {
+        background: transparent;
+        font-size: 18px;
+        color: #fff;
+        cursor: pointer;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+    &.efeitoAtivo {
+        display: flex;
+        bottom: -60px;
+    }
+}
+
 .listTask{
     max-width: 100%;
     width: 100%;

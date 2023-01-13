@@ -5,43 +5,52 @@ import { Tarefa } from '../../models/Tarefa';
 
 type ListTaskProps = {
     ListTask: Tarefa[];
-    clearTask: (index: number) => void;
+    clearTask: (item: Tarefa) => void;
     clearAllTasks: () => void;
     handleTarefaConcluida: (id: number, titulo: string, concluido: boolean) => void;
+    undoAction: (itemSalvo: Tarefa) => void;
 }
 
-export default function ListTask({ListTask, clearTask, clearAllTasks, handleTarefaConcluida} :ListTaskProps) {
-    const [itemParaExcluir, setItemParaExcluir] = useState<number>();
+export default function ListTask({ListTask, clearTask, clearAllTasks, handleTarefaConcluida, undoAction} :ListTaskProps) {
+    const [itemParaExcluir, setItemParaExcluir] = useState<Tarefa>();
     const [openModalLimpar, setOpenModalLimpar] = useState<boolean>(false);
 
-    function handleItemParaExcluir(id: number) {
-        setItemParaExcluir(id)
+    const temTarefasAFazer = ListTask.find(tarefa => !tarefa.concluido) !== undefined;
+    const temTarefasConcluidas = ListTask.find(tarefa => tarefa.concluido) !== undefined;
+
+    const desfazerOpen = !openModalLimpar && itemParaExcluir != undefined;
+
+    function handleItemParaExcluir(item: Tarefa) {
+        setItemParaExcluir(item);
     }
 
     return (
         <>
-            {(typeof itemParaExcluir == "number" || (openModalLimpar && ListTask)) && (
+            {openModalLimpar && (
                 <div className={`${styles.containerModal} flex container`}>
                     <div className={`${styles.containerModal__modalConfirmClearTask} flex`}>
                         <h2>Aviso</h2>
                         <p>
-                            {!openModalLimpar ? `Realmente deseja excluir essa tarefa?` : `Realmente deseja excluir todos as tarefas?`}
+                            {itemParaExcluir != undefined ? `Realmente deseja excluir essa tarefa?` : `Realmente deseja excluir todos as tarefas?`}
                         </p>
                         <div className={`${styles.containerModal__modalConfirmClearTask__buttons} flex`}>
                             <button type='button' onClick={() => {
-                                if(!openModalLimpar && typeof itemParaExcluir == "number") {
+                                if(itemParaExcluir != undefined) {
                                     clearTask(itemParaExcluir);
-                                    setItemParaExcluir(undefined);
+                                    setOpenModalLimpar(false);
+                                    setTimeout(() => {
+                                        setItemParaExcluir(undefined);
+                                    }, 3000)
                                     return;
                                 }
                                 clearAllTasks();
-                                setOpenModalLimpar(false)
+                                setOpenModalLimpar(false);
                             }}>
                                 Sim
                             </button>
                             <button type='button' onClick={() => {
                                 setItemParaExcluir(undefined);
-                                setOpenModalLimpar(false)
+                                setOpenModalLimpar(false);
                             }}>
                                 Não
                             </button>
@@ -49,29 +58,67 @@ export default function ListTask({ListTask, clearTask, clearAllTasks, handleTare
                     </div>
                 </div>
             )}
-            {ListTask.length > 0 && (
-                <ul className={`${styles.listTask} flex`}>
-                    {ListTask.map((item, index) => (
-                        <ListItem
-                            key={index}
-                            item={item}
-                            setItemParaExcluir={handleItemParaExcluir}
-                            handleTarefaConcluida={handleTarefaConcluida}
-                        />
-                    ))}
-                </ul>
-            )}
-            {ListTask.length >= 1 && (
-                <div className={`${styles.buttonLimpar} flex`}>
-                    <p>Você possui {ListTask.length === 1 ? `${ListTask.length} tarefa` : `${ListTask.length} tarefas`}</p>
+            {desfazerOpen ? (
+                <div className={`${styles.efeitoAtivo} ${styles.containerUndoAction} flex`}>
                     <button type='button' onClick={() => {
-                        if(ListTask.length > 0) {
-                            setOpenModalLimpar(true);
-                            return;
-                        }   
-                    }}>Limpar</button>
-                    
+                        undoAction(itemParaExcluir);
+                        setItemParaExcluir(undefined);
+                    }}>
+                        Desfazer ação
+                    </button>
                 </div>
+            ): null}
+            {ListTask.length > 0 && (
+                <>
+                    {temTarefasAFazer ? (
+                        <ul className={`${styles.listTask} flex`}>
+                            {ListTask.map((item) => {
+                                if(!item.concluido) {
+                                    return (
+                                        <ListItem
+                                            key={item.id}
+                                            item={item}
+                                            setItemParaExcluir={item => {
+                                                handleItemParaExcluir(item);
+                                                setOpenModalLimpar(true);
+                                            }}
+                                            handleTarefaConcluida={handleTarefaConcluida}
+                                        />
+                                    );
+                                }
+                            })}
+                        </ul>
+                    ) : null }
+                    {temTarefasConcluidas ? (
+                        <ul className={`${styles.listTask} flex`}>
+                            {ListTask.map((item, index) => {
+                                if(item.concluido){
+                                    return(                            
+                                        <ListItem
+                                            key={index}
+                                            item={item}
+                                            setItemParaExcluir={item => {
+                                                handleItemParaExcluir(item);
+                                                setOpenModalLimpar(true);
+                                            }}
+                                            handleTarefaConcluida={handleTarefaConcluida}
+                                        />
+                                    )
+                                }
+                            })}
+                        </ul>
+                    ) : null }
+                    <div className={`${styles.buttonLimpar} flex`}>
+                        <p>Você possui {ListTask.length === 1 ? `${ListTask.length} tarefa` : `${ListTask.length} tarefas`}</p>
+                        <button type='button' onClick={() => {
+                            if(ListTask.length > 0) {
+                                setOpenModalLimpar(true);
+                                return;
+                            }   
+                        }}>Limpar</button>
+                        
+                    </div>
+                </>
             )}
         </>
     )
