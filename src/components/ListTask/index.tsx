@@ -40,7 +40,7 @@ export default function ListTask({ListTask, clearTask, clearAllTasks, handleTare
                                     setOpenModalLimpar(false);
                                     setTimeout(() => {
                                         setItemParaExcluir(undefined);
-                                    }, 4000)
+                                    }, 5000)
                                     return;
                                 }
                                 clearAllTasks();

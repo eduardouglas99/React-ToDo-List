@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FormTask from "../../components/FormTask";
 import ListTask from "../../components/ListTask";
 import { Tarefa } from "../../models/Tarefa";
@@ -58,19 +58,20 @@ const Home = () => {
     }
 
     function undoAction(itemSalvo: Tarefa) {
-      const temItemIgualNoArray = listaTarefas.filter((item) => item === itemSalvo).length;
-      if(itemSalvo && temItemIgualNoArray) {
-        listaTarefas.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
-        setListaTarefas([...listaTarefas, itemSalvo]);
+      const temItemIgualNoArray = listaTarefas.filter((item) => item.titulo === itemSalvo.titulo).length;
+      if(temItemIgualNoArray) {
+        setFeedback(true);
         return;
       }
-      setFeedback(true);
+      listaTarefas.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
+      setListaTarefas([...listaTarefas, itemSalvo]);
     }
 
     function clearAllTasks() {
       setListaTarefas([]);
       setFeedback(false)
     }
+    console.log(listaTarefas)
   
     return (
       <div className="App">
