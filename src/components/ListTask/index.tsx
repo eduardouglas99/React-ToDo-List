@@ -40,7 +40,7 @@ export default function ListTask({ListTask, clearTask, clearAllTasks, handleTare
                                     setOpenModalLimpar(false);
                                     setTimeout(() => {
                                         setItemParaExcluir(undefined);
-                                    }, 3000)
+                                    }, 4000)
                                     return;
                                 }
                                 clearAllTasks();
@@ -59,7 +59,7 @@ export default function ListTask({ListTask, clearTask, clearAllTasks, handleTare
                 </div>
             )}
             {desfazerOpen ? (
-                <div className={`${styles.efeitoAtivo} ${styles.containerUndoAction} flex`}>
+                <div className={`${styles.containerUndoAction} ${styles.efeitoAtivo}  flex`}>
                     <button type='button' onClick={() => {
                         undoAction(itemParaExcluir);
                         setItemParaExcluir(undefined);

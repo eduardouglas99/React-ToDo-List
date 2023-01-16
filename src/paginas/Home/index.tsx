@@ -58,10 +58,13 @@ const Home = () => {
     }
 
     function undoAction(itemSalvo: Tarefa) {
-      if(itemSalvo) {
+      const temItemIgualNoArray = listaTarefas.filter((item) => item === itemSalvo).length;
+      if(itemSalvo && temItemIgualNoArray) {
         listaTarefas.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
         setListaTarefas([...listaTarefas, itemSalvo]);
+        return;
       }
+      setFeedback(true);
     }
 
     function clearAllTasks() {
