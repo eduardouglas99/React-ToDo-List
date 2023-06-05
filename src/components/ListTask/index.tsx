@@ -2,21 +2,22 @@ import styles from './ListTask.module.scss';
 import { useState } from 'react';
 import ListItem from '../ListItem';
 import { Tarefa } from '../../models/Tarefa';
+import { useTarefaContext } from '../../common/context/Tarefa';
 
 type ListTaskProps = {
-    ListTask: Tarefa[];
     clearTask: (item: Tarefa) => void;
     clearAllTasks: () => void;
     handleTarefaConcluida: (id: number, titulo: string, concluido: boolean) => void;
     undoAction: (itemSalvo: Tarefa) => void;
 }
 
-export default function ListTask({ListTask, clearTask, clearAllTasks, handleTarefaConcluida, undoAction} :ListTaskProps) {
+export default function ListTask({clearTask, clearAllTasks, handleTarefaConcluida, undoAction} :ListTaskProps) {
+    const { listTaks } = useTarefaContext();
     const [itemParaExcluir, setItemParaExcluir] = useState<Tarefa>();
     const [openModalLimpar, setOpenModalLimpar] = useState<boolean>(false);
 
-    const temTarefasAFazer = ListTask.find(tarefa => !tarefa.concluido) !== undefined;
-    const temTarefasConcluidas = ListTask.find(tarefa => tarefa.concluido) !== undefined;
+    const temTarefasAFazer = listTaks.find(tarefa => !tarefa.concluido) !== undefined;
+    const temTarefasConcluidas = listTaks.find(tarefa => tarefa.concluido) !== undefined;
 
     const desfazerOpen = !openModalLimpar && itemParaExcluir != undefined;
 
@@ -68,11 +69,11 @@ export default function ListTask({ListTask, clearTask, clearAllTasks, handleTare
                     </button>
                 </div>
             ): null}
-            {ListTask.length > 0 && (
+            {listTaks.length > 0 && (
                 <>
                     {temTarefasAFazer ? (
                         <ul className={`${styles.listTask} flex`}>
-                            {ListTask.map((item) => {
+                            {listTaks.map((item) => {
                                 if(!item.concluido) {
                                     return (
                                         <ListItem
@@ -91,7 +92,7 @@ export default function ListTask({ListTask, clearTask, clearAllTasks, handleTare
                     ) : null }
                     {temTarefasConcluidas ? (
                         <ul className={`${styles.listTask} flex`}>
-                            {ListTask.map((item, index) => {
+                            {listTaks.map((item, index) => {
                                 if(item.concluido){
                                     return(                            
                                         <ListItem
@@ -109,9 +110,9 @@ export default function ListTask({ListTask, clearTask, clearAllTasks, handleTare
                         </ul>
                     ) : null }
                     <div className={`${styles.buttonLimpar} flex`}>
-                        <p>Você possui {ListTask.length === 1 ? `${ListTask.length} tarefa` : `${ListTask.length} tarefas`}</p>
+                        <p>Você possui {listTaks.length === 1 ? `${listTaks.length} tarefa` : `${listTaks.length} tarefas`}</p>
                         <button type='button' onClick={() => {
-                            if(ListTask.length > 0) {
+                            if(listTaks.length > 0) {
                                 setOpenModalLimpar(true);
                                 return;
                             }   

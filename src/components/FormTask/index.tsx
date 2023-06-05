@@ -1,11 +1,10 @@
 import { useRef } from "react";
 import styles from "./FormTasks.module.scss";
 import { AiOutlinePlus } from 'react-icons/ai';
-type FormTaskProps = {
-    handleSubmit: (valor: string) => void;
-}
+import { useTarefaContext } from "../../common/context/Tarefa";
 
-export default function FormTask({handleSubmit} : FormTaskProps) {
+export default function FormTask() {
+    const { addTask } = useTarefaContext();
     const inputRef = useRef<HTMLInputElement>(null);
 
     return (
@@ -19,7 +18,7 @@ export default function FormTask({handleSubmit} : FormTaskProps) {
             <button 
                 type="button" 
                 onClick={() => {
-                    handleSubmit(inputRef.current?.value || "");
+                    addTask(inputRef.current?.value || "")
                     if(inputRef.current) {
                         inputRef.current.value = "";
                     }
