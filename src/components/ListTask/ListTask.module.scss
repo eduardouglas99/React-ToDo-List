@@ -6,7 +6,7 @@
     height: 100%;
     max-width: 100%;
     z-index: 99999999999;
-    background: #0f7c8b;
+    background: #ababab;
     justify-content: center;
     &__modalConfirmClearTask {
         background-color: #fff;
@@ -18,8 +18,9 @@
         text-align: center;
         margin: 0 20px;
         border-radius: 3px;
+        color: #13232a;
         h2 {
-            color: #0f7c8b;
+            color: #13232a;
             font-size: 40px;
         }
         &__buttons {
@@ -106,6 +107,9 @@
     justify-content: space-between;
     max-width: 100%;
     width: 100%;
+    p{
+        color: #13232a;
+    }
     button {
         background-color: #0f7c8b;
         padding: 8px 15px;
@@ -114,6 +118,9 @@
         cursor: pointer;
         &:hover {
             transform: scale(1.1);
+        }
+        &:disabled {
+            background: #b9b9b9;
         }
     }
 }

@@ -4,15 +4,8 @@ import ListItem from '../ListItem';
 import { Tarefa } from '../../models/Tarefa';
 import { useTarefaContext } from '../../common/context/Tarefa';
 
-type ListTaskProps = {
-    clearTask: (item: Tarefa) => void;
-    clearAllTasks: () => void;
-    handleTarefaConcluida: (id: number, titulo: string, concluido: boolean) => void;
-    undoAction: (itemSalvo: Tarefa) => void;
-}
-
-export default function ListTask({clearTask, clearAllTasks, handleTarefaConcluida, undoAction} :ListTaskProps) {
-    const { listTaks } = useTarefaContext();
+export default function ListTask() {
+    const { listTaks, handleCompletedTask, clearTask, clearAllTasks, undoAction } = useTarefaContext();
     const [itemParaExcluir, setItemParaExcluir] = useState<Tarefa>();
     const [openModalLimpar, setOpenModalLimpar] = useState<boolean>(false);
 
@@ -69,58 +62,56 @@ export default function ListTask({clearTask, clearAllTasks, handleTarefaConcluid
                     </button>
                 </div>
             ): null}
-            {listTaks.length > 0 && (
-                <>
-                    {temTarefasAFazer ? (
-                        <ul className={`${styles.listTask} flex`}>
-                            {listTaks.map((item) => {
-                                if(!item.concluido) {
-                                    return (
-                                        <ListItem
-                                            key={item.id}
-                                            item={item}
-                                            setItemParaExcluir={item => {
-                                                handleItemParaExcluir(item);
-                                                setOpenModalLimpar(true);
-                                            }}
-                                            handleTarefaConcluida={handleTarefaConcluida}
-                                        />
-                                    );
-                                }
-                            })}
-                        </ul>
-                    ) : null }
-                    {temTarefasConcluidas ? (
-                        <ul className={`${styles.listTask} flex`}>
-                            {listTaks.map((item, index) => {
-                                if(item.concluido){
-                                    return(                            
-                                        <ListItem
-                                            key={index}
-                                            item={item}
-                                            setItemParaExcluir={item => {
-                                                handleItemParaExcluir(item);
-                                                setOpenModalLimpar(true);
-                                            }}
-                                            handleTarefaConcluida={handleTarefaConcluida}
-                                        />
-                                    )
-                                }
-                            })}
-                        </ul>
-                    ) : null }
-                    <div className={`${styles.buttonLimpar} flex`}>
-                        <p>Você possui {listTaks.length === 1 ? `${listTaks.length} tarefa` : `${listTaks.length} tarefas`}</p>
-                        <button type='button' onClick={() => {
-                            if(listTaks.length > 0) {
-                                setOpenModalLimpar(true);
-                                return;
-                            }   
-                        }}>Limpar</button>
-                        
-                    </div>
-                </>
-            )}
+            <>
+                {temTarefasAFazer ? (
+                    <ul className={`${styles.listTask} flex`}>
+                        {listTaks.map((item) => {
+                            if(!item.concluido) {
+                                return (
+                                    <ListItem
+                                        key={item.id}
+                                        item={item}
+                                        setItemParaExcluir={item => {
+                                            handleItemParaExcluir(item);
+                                            setOpenModalLimpar(true);
+                                        }}
+                                    />
+                                );
+                            }
+                        })}
+                    </ul>
+                ) : null }
+                {temTarefasConcluidas ? (
+                    <ul className={`${styles.listTask} flex`}>
+                        {listTaks.map((item, index) => {
+                            if(item.concluido){
+                                return(                            
+                                    <ListItem
+                                        key={index}
+                                        item={item}
+                                        setItemParaExcluir={item => {
+                                            handleItemParaExcluir(item);
+                                            setOpenModalLimpar(true);
+                                        }}
+                                    />
+                                )
+                            }
+                        })}
+                    </ul>
+                ) : null }
+                <div className={`${styles.buttonLimpar} flex`}>
+                    <p>Você possui {listTaks.length === 1 ? `${listTaks.length} tarefa` : `${listTaks.length} tarefas`}</p>
+                    <button type='button' 
+                        disabled={listTaks.length <= 0}
+                        onClick={() => {
+                        if(listTaks.length > 0) {
+                            setOpenModalLimpar(true);
+                            return;
+                        }   
+                    }}>Limpar</button>
+                    
+                </div>
+            </>
         </>
     )
 }

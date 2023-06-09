@@ -5,17 +5,16 @@
     &__input {
         height: 30px;
         border-radius: 3px;
-        color: #fff;
         font-size: 16px;
         padding: 10px;
         max-width: 100%;
         width: 100%;
         outline: none;
-        color: #000;
+        color: #13232a;
         border: 1px solid #b9b9b9;
         &:hover, 
         &:focus {
-            border: 1px solid #262626;
+            border: 1px solid #13232a;
         }
     }
     &__button {

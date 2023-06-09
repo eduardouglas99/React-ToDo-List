@@ -13,6 +13,13 @@ type TarefaContextProp = {
   cont: number;
   setCont: React.Dispatch<React.SetStateAction<number>>;
   addTask: (item: string) => void;
+  handleCompletedTask: (id: number, title: string, concluded: boolean) => void;
+  clearTask: (item: Tarefa) => void;
+  clearAllTasks: () => void;
+  undoAction: (savedItem: Tarefa) => void;
+  itemParaExcluir: Tarefa | undefined;
+  setItemParaExcluir: React.Dispatch<React.SetStateAction<Tarefa | undefined>>;
+  handleItemForExclude: (item: Tarefa) => void;
 };
 
 const TarefaContext = createContext<TarefaContextProp>({} as TarefaContextProp);
@@ -22,6 +29,7 @@ export const TarefaProvider = ({ children }: TarefaProviderProps) => {
   const [listTaks, setListTaks] = useState<Tarefa[]>([]);
   const [feedback, setFeedback] = useState<boolean>(false);
   const [cont, setCont] = useState<number>(0);
+  const [itemParaExcluir, setItemParaExcluir] = useState<Tarefa>();
 
   function addTask(item: string) {
     const temItemNoArray = listTaks.length;
@@ -49,6 +57,51 @@ export const TarefaProvider = ({ children }: TarefaProviderProps) => {
     setFeedback(true);
   }
 
+  function handleCompletedTask(id: number, title: string, concluded: boolean) {
+    const novoArray = listTaks.filter((item) => item.id !== id);
+    const novaTarefa: Tarefa = {
+      titulo: title,
+      id: id,
+      concluido: !concluded,
+    };
+    novoArray.splice(id, 0, novaTarefa);
+    novoArray.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
+    setListTaks([...novoArray]);
+  }
+
+  function clearTask(item: Tarefa) {
+    const itemUndoAction: Tarefa = {
+        id: item.id,
+        titulo: item.titulo,
+        concluido: item.concluido,
+      };
+      const novoArray = listTaks.filter(
+        (item) => item.id !== itemUndoAction.id
+      );
+      setListTaks([...novoArray]);
+  }
+
+  function clearAllTasks() {
+    setListTaks([]);
+    setFeedback(false);
+  }
+
+  function undoAction(savedItem: Tarefa) {
+    const temItemIgualNoArray = listTaks.filter(
+      (item) => item.titulo === savedItem.titulo
+    ).length;
+    if (temItemIgualNoArray) {
+      setFeedback(true);
+      return;
+    }
+    listTaks.sort((a: Tarefa, b: Tarefa) => a.id - b.id);
+    setListTaks([...listTaks, savedItem]);
+  }
+
+  function handleItemForExclude(item: Tarefa) {
+    setItemParaExcluir(item);
+  }
+
   const value = useMemo(
     () => ({
       listTaks,
@@ -58,8 +111,15 @@ export const TarefaProvider = ({ children }: TarefaProviderProps) => {
       cont,
       setCont,
       addTask,
+      handleCompletedTask,
+      clearTask,
+      clearAllTasks,
+      undoAction, 
+      itemParaExcluir, 
+      setItemParaExcluir, 
+      handleItemForExclude
     }),
-    [listTaks, setListTaks, feedback, setFeedback, cont, setCont, addTask]
+    [listTaks, setListTaks, feedback, setFeedback, cont, setCont, addTask, handleCompletedTask, clearTask, clearAllTasks, undoAction, itemParaExcluir, setItemParaExcluir, handleItemForExclude]
   );
 
   return (

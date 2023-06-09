@@ -6,12 +6,11 @@ import { useTarefaContext } from "../../common/context/Tarefa";
 export default function FormTask() {
     const { addTask } = useTarefaContext();
     const inputRef = useRef<HTMLInputElement>(null);
-
     return (
         <div className={`${styles.formTask} flex`}>
             <input 
                 type="text" name="nameTask" id="nameTask"
-                placeholder="Digite a tarefa" 
+                placeholder="Digite suas tarefas" 
                 ref={inputRef}
                 className={`${styles.formTask__input}`}
             />

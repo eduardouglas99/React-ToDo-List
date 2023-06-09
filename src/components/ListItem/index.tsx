@@ -3,24 +3,25 @@ import { Tarefa } from '../../models/Tarefa';
 import styles from "./ListItem.module.scss";
 import { TbCheck } from 'react-icons/tb';
 import { ImCheckboxUnchecked } from 'react-icons/im';
+import { useTarefaContext } from '../../common/context/Tarefa';
 
 type ListProps = {
     item: Tarefa;
     setItemParaExcluir: (item: Tarefa) => void;
-    handleTarefaConcluida: (id: number, titulo: string, concluido: boolean) => void;
 }
 
-export default function ListItem({item, setItemParaExcluir, handleTarefaConcluida} : ListProps) {
+export default function ListItem({item, setItemParaExcluir} : ListProps) {
+    const { handleCompletedTask  } = useTarefaContext();
 
     return (
         <li className={`flex ${styles.listTaskItem} ${item.concluido ? `${styles.itemActive}` : ``}`}>
             {item.concluido ? (
                 <TbCheck className={`${styles.iconCheckTask}`} onClick={() => {
-                    handleTarefaConcluida(item.id, item.titulo, item.concluido);
+                    handleCompletedTask(item.id, item.titulo, item.concluido);
                 }}/>
             ) : (
                 <ImCheckboxUnchecked className={`${styles.iconUncheckTask}`} onClick={() => {
-                    handleTarefaConcluida(item.id, item.titulo, item.concluido);
+                    handleCompletedTask(item.id, item.titulo, item.concluido);
                 }}/>
             )}
             {item.titulo}
