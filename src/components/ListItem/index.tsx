@@ -1,4 +1,4 @@
-import {FaTrash} from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 import { Tarefa } from '../../models/Tarefa';
 import styles from "./ListItem.module.scss";
 import { TbCheck } from 'react-icons/tb';
@@ -7,11 +7,10 @@ import { useTarefaContext } from '../../common/context/Tarefa';
 
 type ListProps = {
     item: Tarefa;
-    setItemParaExcluir: (item: Tarefa) => void;
 }
 
-export default function ListItem({item, setItemParaExcluir} : ListProps) {
-    const { handleCompletedTask  } = useTarefaContext();
+export default function ListItem({ item } : ListProps) {
+    const { handleCompletedTask, handleItemForExclude  } = useTarefaContext();
 
     return (
         <li className={`flex ${styles.listTaskItem} ${item.concluido ? `${styles.itemActive}` : ``}`}>
@@ -25,7 +24,7 @@ export default function ListItem({item, setItemParaExcluir} : ListProps) {
                 }}/>
             )}
             {item.titulo}
-            <button type='button' className={`flex`} onClick={() => setItemParaExcluir(item)}>
+            <button type='button' className={`flex`} onClick={() => handleItemForExclude(item)}>
                 <FaTrash />
             </button>
         </li>

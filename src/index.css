@@ -6,10 +6,6 @@ body, * {
   font-family: Georgia, "Times New Roman", serif;
 }
 
-/* body {
-  background: #0f7c8b;
-} */
-
 .flex {
   display: flex;
   align-items: center;

@@ -2,7 +2,7 @@ import FormTask from "../../components/FormTask";
 import ListTask from "../../components/ListTask";
 import styles from "./Home.module.scss";
 import logoHome from "../../assets/images/logo-todo-list.png";
-import { TarefaProvider, useTarefaContext } from "../../common/context/Tarefa";
+import { useTarefaContext } from "../../common/context/Tarefa";
 
 const Home = () => {
   const { listTaks, feedback } = useTarefaContext();
